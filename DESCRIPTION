@@ -1,0 +1,21 @@
+Package: carpentR
+Title: Predict Lake Algal Blooms Using Plankton Dynamics
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Simon",
+           family = "Couch",
+           role = c("aut", "cre"),
+           email = "simonpatrickcouch@gmail.com"),    
+    person(given = "Sam",
+           family = "Fey",
+           role = c("ccp"),
+           email = "feys@reed.edu"),
+    person(given = "Stephen R.",
+           family = "Carpenter",
+           role = c("ccp"))
+Description: This R Package implements Stephen R. Carpenter's (1992) model for 
+predicting lake algal blooms using plankton dynamics and other variables, and
+was developed specifically for use in Sam Fey's Ecology class at Reed College.
+License: CC0
+Encoding: UTF-8
+LazyData: true
