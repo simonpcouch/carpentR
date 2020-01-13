@@ -18,6 +18,10 @@ following code:
 remotes::install_github("simonpcouch/carpentR")
 ```
 
+Note that “original source code” is mentioned throughout this package’s
+source—this is in reference to an original implementation of the model
+in Pascal.
+
 \[1\] Carpenter S.R. (1992) Destabilization of Planktonic Ecosystems and
 Blooms of Blue-Green Algae. In: Kitchell J.F. (eds) Food Web Management.
 Springer Series on Environmental Management. Springer, New York, NY
