@@ -18,9 +18,12 @@ carpenter_model <- function(nanoplankter_diameter, alga_diameter,
                             length_herbivore, death_rate_herbivore,
                             p_influx_rate, p_outflow_rate, mixed_layer_depth) {
   
+  # extract all of the arguments into a named list
+  arguments <- as.list(environment())
+  
   # check to make sure that the supplied arguments fall within the range
   # that are considered "valid"
-  check_arguments()
+  check_arguments(arguments)
   
   # some calculations for coefficients to be used backend
   coefficients <- calculate_coefficients()

@@ -1,0 +1,26 @@
+check_arguments <- function(argument_list) {
+  
+  # first, check that each of the supplied arguments is numeric
+  argument_is_numeric <- lapply(argument_list, is.numeric)
+  
+  if (FALSE %in% unlist(argument_is_numeric)) {
+    bad_arguments <- which(!unlist(argument_is_numeric))
+    
+    error_message <- paste0("The following arguments given are not numeric: ",
+                            names(argument_list)[bad_arguments], ". ",
+                            "Please ensure that, if each of the arguments ",
+                            "supplied look like numbers, they are not ",
+                            "enclosed in \"quotes.\"")
+    
+    stop(sprintf(error_message))
+  }
+  
+  # next, check if each of the arguments are within the "valid" range
+  # ...an irritating solution since lapply doesn't take in named list elements
+  range_checks <- lapply(seq(1, length(argument_list)),
+                         argument_within_range,
+                         argument_list,
+                         names(argument_list))
+
+}
+
