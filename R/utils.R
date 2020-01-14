@@ -47,13 +47,17 @@ default_arguments <- list(c1 = 0.245,
                           v2 = 0.43, # also called c18 in source
                           # the following four values were prompted for
                           # pre-April-1997, but set automatically thereafter
-                          initial_p = .2, # also called c19 in source
-                          initial_sa = 5, # also called c20 in source
-                          initial_la = 5, # also called c21 in source
-                          initial_z = 2, # also called c22 in source
+                          initial_p = .2, # also called c19, p1 in source
+                          initial_sa = 5, # also called c20, a1 in source
+                          initial_la = 5, # also called c21, b1 in source
+                          initial_z = 2, # also called c22, z1 in source
                           interval_between_saves = 1, #also called c23 in source
                           n_intervals_saved = 120, # also called c24 in source
-                          n_steps_per_day = 2) # also called c25 in source
+                          n_steps_per_day = 2, # also called c25 in source
+                          day = 1,
+                          nanop_form_resist = 1.0, # previously phi1
+                          bg_alga_form_resist = 1.0, # previously phi2
+                          altype2 = 1) 
 
 
 # Functions --------------------------------------------------------------
