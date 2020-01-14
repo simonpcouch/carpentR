@@ -27,23 +27,18 @@ valid_ranges <- list(nanoplankter_diameter = c(2, 5),
                      mixed_layer_depth = c(3.7, 10.2))
 
 # a list of default arguments set throughout the original source code
-default_arguments <- list(c1 = 0.245,
-                          c2 = 0.000907,
+default_arguments <- list(c2 = 0.000907,
                           d = .2, # also called c3 in source
                           e = 0.4, # also called c4 in source
                           f1 = 0.1, # also called c5 in source
                           f2 = 0.4, # also called c6 in source
                           g1 = 1.0, # also called c7 in source
                           g2 = 0.7, # also called c8 in source
-                          h1 = 9.06, # also called c9 in source
                           h2 = 24.3, # also called c10 in source
                           i = 0.7, # also called c11 in source
-                          k = 97.0, # also called c12 in source
-                          s1 = 0.01, # also called c13 in source
                           s2 = 0.05, # also called c14 in source
                           t1 = 0.201, # also called c15 in source
                           t2 = 10.8, # also called c16 in source
-                          v1 = 1.37, # also called c17 in source
                           v2 = 0.43, # also called c18 in source
                           # the following four values were prompted for
                           # pre-April-1997, but set automatically thereafter
@@ -57,7 +52,10 @@ default_arguments <- list(c1 = 0.245,
                           day = 1,
                           nanop_form_resist = 1.0, # previously phi1
                           bg_alga_form_resist = 1.0, # previously phi2
-                          altype2 = 1) 
+                          altype2 = 1,
+                          pt = 1, 
+                          ps = 1, 
+                          pertsize = 0) 
 
 
 # Functions --------------------------------------------------------------
