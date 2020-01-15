@@ -47,4 +47,6 @@ calculate_coefficients <- function(user_arguments) {
   
   args$fmax_alga <- exp(args$fco2*log(10))*0.178 / args$zwt
   args$t2 <- 1.0 / args$fmax_alga
+  
+  args
 }

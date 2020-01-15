@@ -9,8 +9,8 @@
 #' # These are known as the "Mendota defaults"
 #' carpenter_model(nanoplankter_diameter = 5.0,
 #'                 alga_diameter = 40,
-#'                 herbivore_length = 1,
-#'                 herbivore_death_rate = .1,
+#'                 length_herbivore = 1,
+#'                 death_rate_herbivore = .1,
 #'                 p_influx_rate = 0.7,
 #'                 p_outflow_rate = 0.0003,
 #'                 mixed_layer_depth = 2.5)       
@@ -26,8 +26,8 @@ carpenter_model <- function(nanoplankter_diameter, alga_diameter,
   check_arguments(arguments)
   
   # some calculations for coefficients to be used backend
-  coefficients <- calculate_coefficients(arguments)
+  x <- calculate_coefficients(arguments)
   
   # run the model
-  results <- run_carpenter()
+  results <- run_carpenter(x)
 }
