@@ -76,3 +76,38 @@ argument_within_range <- function(index, values, names) {
   # check whether it's in the range
   x > valid_ranges[[name_index]][1] & x < valid_ranges[[name_index]][2]
 }
+
+# computes the flushing rate of phosphorus, algae, and zooplankton
+compute_rates <- function(x) {
+  
+  x$q <- 1.0 + (x$c1 * x$t1 * x$initial_sa) + (x$c2 * x$t2 * x$initial_la)
+  x$r1 <- x$v1 * x$initial_p / (x$h1 + x$initial_p)
+  x$r2 <- x$v2 * x$initial_p / (x$h2 + x$initial_p)
+  x$u <- ((x$g1 * x$initial_sa) + (x$g2 * x$initial_la = 5)) / x$k
+  x$ddep <- 1 - x$u
+  if (x$ddep < 0) {x$ddep <- 0}
+  x$znum <- {((1 - x$e - x$f1) * x$c1 * x$initial_sa) + 
+    ((1 - x$e - x$f2) * x$c2 * x$initial_la)}
+  x$excr <- {x$e * x$initial_z * ((x$c1 * x$initial_sa) + 
+                                    (x$c2 * x$initial_la)) / x$q}
+  
+  # rate for phosphorus (previously der1)
+  x$der_p <- {x$i - (x$r1 * x$initial_sa * x$ddep) - 
+    (x$r2 * x$initial_la * x$ddep) + x$excr - (x$p_outflow_rate * x$initial_p)}
+  # rate for small algae (previously der2)
+  x$der_sa <- {(x$r1 * x$initial_sa * x$ddep) - 
+      (x$c1 * x$initial_sa * x$initial_z / x$q) - (x$s1 * x$initial_sa)}
+  # rate for large algae (previously der3)
+  x$der_la <- (x$r2 * x$initial_la * x$ddep) - 
+    (x$c2 * x$initial_la * x$initial_z / x$q) - (x$s2 * x$initial_la)
+  # rate for zooplankton (previously der4)
+  x$der_z <- (x$initial_z * x$znum/x$q) - (x$d*x$initial_z)
+  
+  # return the whole list
+  x
+}
+
+# estimates integrals using runge-kutta order 4 method
+estimate_integrals <- function(x) {
+  
+}
