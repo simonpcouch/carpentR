@@ -46,8 +46,8 @@ default_arguments <- list(c2 = 0.000907,
                           initial_sa = 5, # also called c20, a1 in source
                           initial_la = 5, # also called c21, b1 in source
                           initial_z = 2, # also called c22, z1 in source
-                          interval_between_saves = 1, #also called c23 in source
-                          n_intervals_saved = 120, # also called c24 in source
+                          interval_length = 1, #also called c23 in source
+                          n_intervals = 120, # also called c24 in source
                           n_steps_per_day = 2, # also called c25 in source
                           day = 1,
                           nanop_form_resist = 1.0, # previously phi1
@@ -107,7 +107,19 @@ compute_rates <- function(x) {
   x
 }
 
+# a function to check the bounds of p, sa, la, and z
+check_bounds <- function(x) {
+  if (x <= 0) {
+    x <- 1e-6
+  } else if (x >= 200) {
+    stop(sprintf("The given arguments resulted in an unstable model."))
+  }
+  x
+}
+
 # estimates integrals using runge-kutta order 4 method
 estimate_integrals <- function(x) {
   
 }
+
+
