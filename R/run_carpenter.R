@@ -7,13 +7,10 @@ run_carpenter <- function(x) {
   x$h <- 1 / x$n_steps_per_day
   x$pulseday <- 60
   
-  x$p_results <- rep(NA, x$n_intervals - 1)
-  x$sa_results <- rep(NA, x$n_intervals - 1)
-  x$la_results <- rep(NA, x$n_intervals - 1)
-  x$z_results <- rep(NA, x$n_intervals - 1)
-  
+  # preallocate some vectors
+  x$p_results <- x$sa_results <- x$la_results <- x$z_results <- 
+    day <- achl <- bchl <- tchl <- zb <- rep(NA, x$n_intervals - 1)
   x <- 1
-  day <- rep(NA, x$n_intervals - 1)
   
   # triply nested loops.. sheesh (use this instead of the apply family
   # so that we don't have to pass values as function-level variables 
@@ -58,6 +55,20 @@ run_carpenter <- function(x) {
     
   } # end of i-indexed loop
   
+  # another i indexed loop, beginning at 1?
+  for (i in 1:x$n_intervals) {
+    
+    # some calculations for algal chlorphyll
+    achl[i] <- x$g1 * x$sa_results[i]
+    bchl[i] <- x$g2 * x$la_results[i]
+    tchl[i] <- achl[i] + bchl[i]
+    zb[i] <- x$z_results[i] / 0.018
 
+  }
+  
+  # store the results as list elements
+  x["achl", "bchl", "tchl", "zb", "day"] <- list(achl, bchl, tchl, zb, day)
+
+  # return the list
   
 } # end of run_carpenter
