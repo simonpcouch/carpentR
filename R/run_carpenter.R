@@ -10,48 +10,48 @@ run_carpenter <- function(x) {
   # preallocate some vectors
   x$p_results <- x$sa_results <- x$la_results <- x$z_results <- 
     day <- achl <- bchl <- tchl <- zb <- rep(NA, x$n_intervals - 1)
-  x <- 1
+  x$x <- 1
   
-  # triply nested loops.. sheesh (use this instead of the apply family
+  # triply nested loops.. sheesh (use this instead of the apply/map family
   # so that we don't have to pass values as function-level variables 
   # and since all vectors can be pre-allocated)
   for (i in 2:x$n_intervals) {
-    
-    p <- x$initial_p
-    sa <- x$initial_sa
-    la <- x$initial_la
-    z <- x$initial_z
+
+    # reset the values at the beginning of each iteration
+    # initial concentrations of p, sa, la, and z
+    y <- list(x$initial_p, x$initial_sa, x$initial_la, x$initial_z)
     
     for (j in 1:x$interval_length) {
       for (k in 1:x$n_steps_per_day) {
         
         # estimate integrals using runge-kutta order 4 method
-        estimate_integrals(x)
+        estimate_integrals(y, x)
         
         # check the bounds of the different variables
-        c(p, sa, la, z) <- lapply(list(p, sa, la, z),
-                                  check_bounds) %>%
-                           unlist()
+        c(y[[1]], y[[2]], y[[3]], y[[4]]) <- 
+          lapply(list(y[[1]], y[[2]], y[[3]], y[[4]]),
+                 check_bounds) %>%
+          unlist()
         
-        x <- round(x + x$h)
-        x$tday <- x
+        x$x <- round(x$x + x$h)
+        x$tday <- x$x
         
         if (x$tday == x$pulseday) {
           if (x$perttype == 1) {
-            p <- p + x$pertsize
+            y[[1]] <- y[[1]] + x$pertsize
           } else if (perttype == 2) {
-            sa <- sa * x$pertsize
-            la <- la * x$pertsize
+            y[[2]] <- y[[2]] * x$pertsize
+            y[[3]] <- y[[3]] * x$pertsize
           }
         }
       } # end of k-indexed loop
     } # end of j-indexed loop
     
-    day[i] <- x
-    x$p_results[i] <- p
-    x$sa_results[i] <- sa
-    x$la_results[i] <- la
-    x$z_results[i] <- z
+    day[i] <- x$x
+    x$p_results[i] <- y[[1]]
+    x$sa_results[i] <- y[[2]]
+    x$la_results[i] <- y[[3]]
+    x$z_results[i] <- y[[4]]
     
   } # end of i-indexed loop
   
@@ -59,8 +59,8 @@ run_carpenter <- function(x) {
   for (i in 1:x$n_intervals) {
     
     # some calculations for algal chlorphyll
-    achl[i] <- x$g1 * x$sa_results[i]
-    bchl[i] <- x$g2 * x$la_results[i]
+    achl[i] <- x$g1 * y[[2]][i]
+    bchl[i] <- x$g2 * y[[3]][i]
     tchl[i] <- achl[i] + bchl[i]
     zb[i] <- x$z_results[i] / 0.018
 

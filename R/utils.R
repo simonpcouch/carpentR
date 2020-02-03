@@ -78,33 +78,37 @@ argument_within_range <- function(index, values, names) {
 }
 
 # computes the flushing rate of phosphorus, algae, and zooplankton
-compute_rates <- function(x) {
+compute_rates <- function(y, x) {
   
-  x$q <- 1.0 + (x$c1 * x$t1 * x$initial_sa) + (x$c2 * x$t2 * x$initial_la)
-  x$r1 <- x$v1 * x$initial_p / (x$h1 + x$initial_p)
-  x$r2 <- x$v2 * x$initial_p / (x$h2 + x$initial_p)
-  x$u <- ((x$g1 * x$initial_sa) + (x$g2 * x$initial_la = 5)) / x$k
+  x$q <- 1 + (x$c1 * x$t1 * y[[2]]) + (x$c2 * x$t2 * y[[3]])
+  x$r1 <- x$v1 * y[[1]] / (x$h1 + y[[1]])
+  x$r2 <- x$v2 * y[[1]] / (x$h2 + y[[1]])
+  x$u <- ((x$g1 * y[[2]]) + (x$g2 * y[[3]] = 5)) / x$k
   x$ddep <- 1 - x$u
   if (x$ddep < 0) {x$ddep <- 0}
-  x$znum <- {((1 - x$e - x$f1) * x$c1 * x$initial_sa) + 
-    ((1 - x$e - x$f2) * x$c2 * x$initial_la)}
-  x$excr <- {x$e * x$initial_z * ((x$c1 * x$initial_sa) + 
-                                    (x$c2 * x$initial_la)) / x$q}
+  x$znum <- {((1 - x$e - x$f1) * x$c1 * y[[2]]) + 
+    ((1 - x$e - x$f2) * x$c2 * y[[3]])}
+  x$excr <- {x$e * y[[4]] * ((x$c1 * y[[2]]) + 
+                                    (x$c2 * y[[3]])) / x$q}
   
-  # rate for phosphorus (previously der1)
-  x$der_p <- {x$i - (x$r1 * x$initial_sa * x$ddep) - 
-    (x$r2 * x$initial_la * x$ddep) + x$excr - (x$p_outflow_rate * x$initial_p)}
-  # rate for small algae (previously der2)
-  x$der_sa <- {(x$r1 * x$initial_sa * x$ddep) - 
-      (x$c1 * x$initial_sa * x$initial_z / x$q) - (x$s1 * x$initial_sa)}
-  # rate for large algae (previously der3)
-  x$der_la <- (x$r2 * x$initial_la * x$ddep) - 
-    (x$c2 * x$initial_la * x$initial_z / x$q) - (x$s2 * x$initial_la)
-  # rate for zooplankton (previously der4)
-  x$der_z <- (x$initial_z * x$znum/x$q) - (x$d*x$initial_z)
+  # initialize a der variable this a vector containing flushing rate of
+  # phosphorus, small algae, large algae, and zooplankton (in that order)
+  der <- c()
   
-  # return the whole list
-  x
+  # rate for phosphorus (p) (previously der1)
+  der[1] <- {x$i - (x$r1 * y[[2]] * x$ddep) - 
+    (x$r2 * y[[3]] * x$ddep) + x$excr - (x$p_outflow_rate * y[[1]])}
+  # rate for small algae (sa) (previously der2)
+  der[2] <- {(x$r1 * y[[2]] * x$ddep) - 
+      (x$c1 * y[[2]] * y[[4]] / x$q) - (x$s1 * y[[2]])}
+  # rate for large algae (la) (previously der3)
+  der[3] <- (x$r2 * y[[3]] * x$ddep) - 
+    (x$c2 * y[[3]] * y[[4]] / x$q) - (x$s2 * y[[3]])
+  # rate for zooplankton (z) (previously der4)
+  der[4] <- (y[[4]] * x$znum/x$q) - (x$d*y[[4]])
+  
+  # return der
+  der
 }
 
 # a function to check the bounds of p, sa, la, and z
@@ -118,7 +122,37 @@ check_bounds <- function(x) {
 }
 
 # estimates integrals using runge-kutta order 4 method
-estimate_integrals <- function(x) {
+estimate_integrals <- function(y, x) {
+  
+  nmax <- 10
+  
+  x$hh <- x$h * .05
+  x$h6 <- h / 6
+
+  x$der <- compute_rates(y, x)
+  
+  for (i in 1:4) {
+    yt[i] <- x$y[i] + x$hh * x$der[i]
+  }
+  
+  x$dyt <- compute_rates(yt, x)
+  
+  for (i in 1:4) {
+    yt[i] <- x$y[i] + x$hh * x$dyt[i]
+  }
+  
+  x$dym <- compute_rates(yt, x)
+  
+  for (i in 1:4) {
+    yt[i] <- x$y[i] + x$h * x$dym[i]
+    x$dym[i] <- x$dyt[i] + x$dym[i]
+  }
+  
+  x$dydx <- compute_rates(yt, x)
+  
+  for (i in 1:4) {
+    x$yout[i] <- x$y[i] + x$h6*(x$dydx[i] + x$dyt[i] + 2.0 * x$dym[i])
+  }
   
 }
 
