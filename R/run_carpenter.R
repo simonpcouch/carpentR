@@ -25,13 +25,10 @@ run_carpenter <- function(x) {
       for (k in 1:x$n_steps_per_day) {
         
         # estimate integrals using runge-kutta order 4 method
-        estimate_integrals(y, x)
+        x <- estimate_integrals(y, x)
         
         # check the bounds of the different variables
-        c(y[[1]], y[[2]], y[[3]], y[[4]]) <- 
-          lapply(list(y[[1]], y[[2]], y[[3]], y[[4]]),
-                 check_bounds) %>%
-          unlist()
+        y <- lapply(list(y[[1]], y[[2]], y[[3]], y[[4]]), check_bounds)
         
         x$x <- round(x$x + x$h)
         x$tday <- x$x
@@ -47,7 +44,7 @@ run_carpenter <- function(x) {
       } # end of k-indexed loop
     } # end of j-indexed loop
     
-    day[i] <- x$x
+    day[i] <- x
     x$p_results[i] <- y[[1]]
     x$sa_results[i] <- y[[2]]
     x$la_results[i] <- y[[3]]
@@ -58,7 +55,7 @@ run_carpenter <- function(x) {
   # another i indexed loop, beginning at 1?
   for (i in 1:x$n_intervals) {
     
-    # some calculations for algal chlorphyll
+    # some calculations for algal chlorophyll
     achl[i] <- x$g1 * y[[2]][i]
     bchl[i] <- x$g2 * y[[3]][i]
     tchl[i] <- achl[i] + bchl[i]
@@ -67,8 +64,9 @@ run_carpenter <- function(x) {
   }
   
   # store the results as list elements
-  x["achl", "bchl", "tchl", "zb", "day"] <- list(achl, bchl, tchl, zb, day)
+  x[c("achl", "bchl", "tchl", "zb", "day")] <- list(achl, bchl, tchl, zb, day)
 
   # return the list
+  x
   
 } # end of run_carpenter

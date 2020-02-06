@@ -83,7 +83,7 @@ compute_rates <- function(y, x) {
   x$q <- 1 + (x$c1 * x$t1 * y[[2]]) + (x$c2 * x$t2 * y[[3]])
   x$r1 <- x$v1 * y[[1]] / (x$h1 + y[[1]])
   x$r2 <- x$v2 * y[[1]] / (x$h2 + y[[1]])
-  x$u <- ((x$g1 * y[[2]]) + (x$g2 * y[[3]] = 5)) / x$k
+  x$u <- ((x$g1 * y[[2]]) + (x$g2 * y[[3]])) / x$k
   x$ddep <- 1 - x$u
   if (x$ddep < 0) {x$ddep <- 0}
   x$znum <- {((1 - x$e - x$f1) * x$c1 * y[[2]]) + 
@@ -95,7 +95,6 @@ compute_rates <- function(y, x) {
   # phosphorus, small algae, large algae, and zooplankton (in that order)
   der <- c()
   
-  # rate for phosphorus (p) (previously der1)
   der[1] <- {x$i - (x$r1 * y[[2]] * x$ddep) - 
     (x$r2 * y[[3]] * x$ddep) + x$excr - (x$p_outflow_rate * y[[1]])}
   # rate for small algae (sa) (previously der2)
@@ -106,6 +105,7 @@ compute_rates <- function(y, x) {
     (x$c2 * y[[3]] * y[[4]] / x$q) - (x$s2 * y[[3]])
   # rate for zooplankton (z) (previously der4)
   der[4] <- (y[[4]] * x$znum/x$q) - (x$d*y[[4]])
+  
   
   # return der
   der
@@ -124,35 +124,39 @@ check_bounds <- function(x) {
 # estimates integrals using runge-kutta order 4 method
 estimate_integrals <- function(y, x) {
   
-  nmax <- 10
-  
   x$hh <- x$h * .05
-  x$h6 <- h / 6
+  x$h6 <- x$h / 6
 
   x$der <- compute_rates(y, x)
   
+  # initialize yt -- the flushing rates of the p, sa, la, and z
+  yt <- rep(NA, 4)
+  
   for (i in 1:4) {
-    yt[i] <- x$y[i] + x$hh * x$der[i]
+    yt[i] <- y[[i]] + x$hh * x$der[i]
   }
   
   x$dyt <- compute_rates(yt, x)
   
   for (i in 1:4) {
-    yt[i] <- x$y[i] + x$hh * x$dyt[i]
+    yt[i] <-  y[[i]] + x$hh * x$dyt[i]
   }
   
   x$dym <- compute_rates(yt, x)
   
   for (i in 1:4) {
-    yt[i] <- x$y[i] + x$h * x$dym[i]
+    yt[i] <-  y[[i]] + x$h * x$dym[i]
     x$dym[i] <- x$dyt[i] + x$dym[i]
   }
   
   x$dydx <- compute_rates(yt, x)
   
   for (i in 1:4) {
-    x$yout[i] <- x$y[i] + x$h6*(x$dydx[i] + x$dyt[i] + 2.0 * x$dym[i])
+    x$yout[i] <-  y[[i]] + x$h6*(x$dydx[i] + x$dyt[i] + (2 * x$dym[i]))
   }
+  
+  # return the whole list
+  x
   
 }
 

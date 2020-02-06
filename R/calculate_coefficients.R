@@ -45,7 +45,7 @@ calculate_coefficients <- function(user_arguments) {
   args$c2 <- exp(args$fco1_alga*log(10)) * 0.556 / args$zwt
   if (args$alga_diameter > args$dmax) {args$c2 <- args$c2 / 10}
   
-  args$fmax_alga <- exp(args$fco2*log(10))*0.178 / args$zwt
+  args$fmax_alga <- exp(args$fco2_nano*log(10))*0.178 / args$zwt
   args$t2 <- 1.0 / args$fmax_alga
   
   args
