@@ -20,7 +20,6 @@ run_carpenter <- function(x) {
   x$la_results[1] <- x$initial_la
   x$z_results[1] <- x$initial_z
   
-  
   # triply nested loops.. sheesh (use this instead of the apply/map family
   # so that we don't have to pass values as function-level variables 
   # and since all vectors can be pre-allocated)
@@ -37,7 +36,7 @@ run_carpenter <- function(x) {
         x <- estimate_integrals(y, x)
         
         # check the bounds of the different variables
-        y <- lapply(y, check_bounds)
+        y <- lapply(x$yout, check_bounds)
         
         x$x <- round(x$x + x$h)
         x$tday <- x$x
