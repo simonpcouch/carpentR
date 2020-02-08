@@ -44,17 +44,13 @@ carpenter_model <- function(nanoplankter_diameter, alga_diameter,
   # run the model
   results <- run_carpenter(x)
   
-  output <- c(data = list(tibble::tibble(
-    unlist(results$day),
-    zooplankton = results$z_results,
-    small_algae = results$sa_results,
-    large_algae = results$la_results,
+  output <- tibble::tibble(
+    day = results$day,
     phosphorus = results$p_results,
     algal_chlorphyll = results$achl,
     blue_green_chlorphyll = results$bchl,
-    total_chlorophyll = results$tchl,
-    zooplankton_biomass = results$zb,)),
-               arguments)
+    zooplankton_biomass = results$zb
+    )
   
   output
 }
