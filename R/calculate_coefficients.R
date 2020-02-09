@@ -9,9 +9,9 @@ calculate_coefficients <- function(user_arguments) {
   # modified or appended to by each of these calls
   args$nanoplankter_radius <- args$nanoplankter_diameter / 2
   args$nanoplankter_volume <- (4/3) * pi * (args$nanoplankter_radius^3)
-  args$log_nanoplankter_volume <- log(args$nanoplankter_volume)
+  args$log_nanoplankter_volume <- log10(args$nanoplankter_volume)
   args$v1 <- 1.855 - (0.266 * args$log_nanoplankter_volume)
-  args$h1 <- 6.48 * 2 * log(args$nanoplankter_diameter)
+  args$h1 <- 6.48 * 2 * log10(args$nanoplankter_diameter)
   args$s1 <- {0.01822 * args$nanoplankter_radius^2 / 
     (args$nanop_form_resist * args$mixed_layer_depth)}
   
@@ -19,16 +19,16 @@ calculate_coefficients <- function(user_arguments) {
   
   args$alga_radius <- args$alga_diameter / 2
   args$alga_volume <- (4/3) * pi * (args$alga_radius^3)
-  args$log_alga_volume <- log(args$alga_volume)
+  args$log_alga_volume <- log10(args$alga_volume)
   args$v2 <- 1.855 - (0.266 * args$log_alga_volume)
-  args$h2 <- 6.48 * 2 * log(args$alga_diameter)
+  args$h2 <- 6.48 * 2 * log10(args$alga_diameter)
   args$s2 <- {0.01822 * args$alga_radius^2 / 
       (args$bg_alga_form_resist * args$mixed_layer_depth)}  
   if (args$altype2 == 1) {args$s2 <- 0.05}
   if (args$altype2 == 2) {args$s2 <- 0.01}
   args$k <- (973/args$mixed_layer_depth) - 0.6
   args$zwt <- 9.86 * exp(2.01 * log(args$length_herbivore))
-  args$f_nano <- {-0.719 + (0.587*log(args$zwt)) - 
+  args$f_nano <- {-0.719 + (0.587*log10(args$zwt)) - 
     (0.165*args$log_nanoplankter_volume^2) + (0.887*args$log_nanoplankter_volume)}
   args$fco1_nano <- args$f_nano - 0.486
   args$fco2_nano <- args$f_nano + 1.317
@@ -38,7 +38,7 @@ calculate_coefficients <- function(user_arguments) {
 
   # if blue green diameter is twice the burns value, c is decreased 10x
   args$dmax <- 2.0 * ((22.0 * args$length_herbivore) + 4.9)
-  args$f_alga <- {-0.719 + (0.587*log(args$zwt)) - 
+  args$f_alga <- {-0.719 + (0.587*log10(args$zwt)) - 
       (0.165*args$log_alga_volume^2) + (0.887*args$log_alga_volume)}
   args$fco1_alga <- args$f_alga - 0.486
   args$fco2_alga <- args$f_alga + 1.317
