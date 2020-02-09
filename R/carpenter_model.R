@@ -47,8 +47,8 @@ carpenter_model <- function(nanoplankter_diameter, alga_diameter,
   tibble::tibble(
     day = results$day,
     phosphorus = results$p_results,
-    algal_chlorphyll = results$achl,
-    blue_green_chlorphyll = results$bchl,
+    algal_chlorophyll = results$achl,
+    blue_green_chlorophyll = results$bchl,
     zooplankton_biomass = results$zb
     )
 
