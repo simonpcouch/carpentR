@@ -3,26 +3,9 @@
 # outputted by calculate_coefficients
 run_carpenter <- function(x) {
   
-  # set some constants
-  x$h <- 1 / x$n_steps_per_day
-  x$pulseday <- 60
-  
-  # preallocate some vectors
-  x$p_results <- x$sa_results <- x$la_results <- x$z_results <- 
-    achl <- bchl <- tchl <- zb <- rep(NA, x$n_intervals)
-  x$day <- 1:x$n_intervals
-  x$x <- 1
-  
-  # initialize the first values of phosphorus, 
-  # small algae, large algae, and zooplankton
-  x$p_results[1] <- x$initial_p
-  x$sa_results[1] <- x$initial_sa
-  x$la_results[1] <- x$initial_la
-  x$z_results[1] <- x$initial_z
-  
   # triply nested loops.. sheesh (use this instead of the apply/map family
   # so that we don't have to pass values as function-level variables 
-  # and since all vectors can be pre-allocated)
+  # and since all vectors have been pre-allocated)
   for (i in 2:x$n_intervals) {
 
     # grab the most recent concentrations
@@ -38,8 +21,7 @@ run_carpenter <- function(x) {
         # check the bounds of the different variables
         y <- lapply(x$yout, check_bounds)
         
-        x$x <- round(x$x + x$h)
-        x$tday <- x$x
+        x$tday <- round(1 + x$h)
         
         if (x$tday == x$pulseday) {
           if (x$perttype == 1) {
@@ -59,19 +41,16 @@ run_carpenter <- function(x) {
     
   } # end of i-indexed loop
   
-  # another i indexed loop, beginning at 1?
+  # another i indexed loop, beginning at 1
   for (i in 1:x$n_intervals) {
     
     # some calculations for algal chlorophyll
-    achl[i] <- x$g1 * x$sa_results[i]
-    bchl[i] <- x$g2 * x$la_results[i]
-    tchl[i] <- achl[i] + bchl[i]
-    zb[i] <- x$z_results[i] / 0.018
+    x$achl[i] <- x$g1 * x$sa_results[i]
+    x$bchl[i] <- x$g2 * x$la_results[i]
+    x$tchl[i] <- x$achl[i] + x$bchl[i]
+    x$zb[i] <- x$z_results[i] / 0.018
 
   }
-  
-  # store the results as list elements
-  x[c("achl", "bchl", "tchl", "zb")] <- list(achl, bchl, tchl, zb)
 
   # return the list
   x

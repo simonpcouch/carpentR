@@ -45,22 +45,31 @@ default_arguments <- list(c2 = 0.000907,
                           t2 = 10.8, # also called c16 in source
                           # c17 is referred to as v1 elsewhere in source
                           v2 = 0.43, # also called c18 in source
-                          # the following four values were prompted for
-                          # pre-April-1997, but set automatically thereafter
-                          initial_p = .2, # also called c19, p1 in source
-                          initial_sa = 5, # also called c20, a1 in source
-                          initial_la = 5, # also called c21, b1 in source
-                          initial_z = 2, # also called c22, z1 in source
                           interval_length = 1, #also called c23 in source
                           n_intervals = 120, # also called c24 in source
                           n_steps_per_day = 2, # also called c25 in source
-                          day = 1,
                           nanop_form_resist = 1.0, # previously phi1
                           bg_alga_form_resist = 1.0, # previously phi2
                           altype2 = 1,
                           pt = 1, 
                           ps = 1, 
-                          pertsize = 0) 
+                          pertsize = 0,
+                          pulseday = 60) %>%
+  c(.,  # the following four values were prompted for
+        # pre-April-1997, but set automatically thereafter
+    list(p_results = c(.2, rep(NA, .$n_intervals - 1)), 
+        # also called c19, p1 in source
+        sa_results = c(5, rep(NA, .$n_intervals - 1)),
+        # also called c20, a1 in source
+        la_results = c(5, rep(NA, .$n_intervals - 1)),
+        # also called c21, b1 in source
+        z_results = c(2, rep(NA, .$n_intervals - 1)),
+        achl = rep(NA, .$n_intervals),
+        bchl = rep(NA, .$n_intervals),
+        tchl = rep(NA, .$n_intervals),
+        zb = rep(NA, .$n_intervals),
+        day = 1:.$n_intervals,
+        h = 1/.$n_steps_per_day))
 
 
 # Functions --------------------------------------------------------------
@@ -85,6 +94,7 @@ argument_within_range <- function(index, values, names) {
 # computes the flushing rate of phosphorus, algae, and zooplankton
 compute_rates <- function(y, x) {
   
+  # actually resets the constants every time
   x$q <- 1 + (x$c1 * x$t1 * y[[2]]) + (x$c2 * x$t2 * y[[3]])
   x$r1 <- x$v1 * y[[1]] / (x$h1 + y[[1]])
   x$r2 <- x$v2 * y[[1]] / (x$h2 + y[[1]])
@@ -95,6 +105,7 @@ compute_rates <- function(y, x) {
     ((1 - x$e - x$f2) * x$c2 * y[[3]])}
   x$excr <- {x$e * y[[4]] * ((x$c1 * y[[2]]) + 
                                     (x$c2 * y[[3]])) / x$q}
+
   
   # initialize a der variable this a vector containing flushing rate of
   # phosphorus, small algae, large algae, and zooplankton (in that order)
@@ -132,13 +143,13 @@ estimate_integrals <- function(y, x) {
   x$hh <- x$h * .05
   x$h6 <- x$h / 6
 
-  x$der <- compute_rates(y, x)
+  x$dydx <- compute_rates(y, x)
   
   # initialize yt -- the flushing rates of the p, sa, la, and z
   yt <- rep(NA, 4)
   
   for (i in 1:4) {
-    yt[i] <- y[[i]] + x$hh * x$der[i]
+    yt[i] <- y[[i]] + x$hh * x$dydx[i]
   }
   
   x$dyt <- compute_rates(yt, x)
@@ -154,7 +165,7 @@ estimate_integrals <- function(y, x) {
     x$dym[i] <- x$dyt[i] + x$dym[i]
   }
   
-  x$dydx <- compute_rates(yt, x)
+  x$dyt <- compute_rates(yt, x)
   
   for (i in 1:4) {
     x$yout[i] <-  y[[i]] + x$h6*(x$dydx[i] + x$dyt[i] + (2 * x$dym[i]))
