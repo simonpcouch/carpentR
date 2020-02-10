@@ -15,19 +15,26 @@ carpenter_model(
 )
 }
 \arguments{
-\item{nanoplankter_diameter}{diameter of nanoplankter (micrometers)}
+\item{nanoplankter_diameter}{diameter of nanoplankter (micrometers):
+acceptable range is [2, 5]}
 
-\item{alga_diameter}{diameter of blue green alga (micrometers)}
+\item{alga_diameter}{diameter of blue green alga (micrometers): acceptable
+range is [50, 2000]}
 
-\item{length_herbivore}{herbivore length (millimeters)}
+\item{length_herbivore}{herbivore length (millimeters): acceptable range
+is [.3, 2.5]}
 
-\item{death_rate_herbivore}{herbivore death rate (fraction per day)}
+\item{death_rate_herbivore}{herbivore death rate (fraction per day):
+acceptable range is [.05, .3]}
 
-\item{p_influx_rate}{P influx rate (ug P per L per day)}
+\item{p_influx_rate}{P influx rate (ug P per L per day): acceptable range
+is [.1, .4]}
 
-\item{p_outflow_rate}{P outflow rate (fraction per day)}
+\item{p_outflow_rate}{P outflow rate (fraction per day): acceptable range
+is [0, 1]}
 
-\item{mixed_layer_depth}{mixed layer depth (meters)}
+\item{mixed_layer_depth}{mixed layer depth (meters): acceptable range is
+[3.7, 10.2]}
 }
 \value{
 This function returns a tibble, with columns:

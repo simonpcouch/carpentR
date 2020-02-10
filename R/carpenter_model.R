@@ -4,13 +4,20 @@
 #' paper "Destabilization of Planktonic Ecosystems and Blooms of Blue-Green
 #' Algae."
 #' 
-#' @param nanoplankter_diameter diameter of nanoplankter (micrometers)
-#' @param alga_diameter diameter of blue green alga (micrometers)
-#' @param length_herbivore herbivore length (millimeters)
-#' @param death_rate_herbivore herbivore death rate (fraction per day)
-#' @param p_influx_rate P influx rate (ug P per L per day)
-#' @param p_outflow_rate P outflow rate (fraction per day)
-#' @param mixed_layer_depth mixed layer depth (meters)
+#' @param nanoplankter_diameter diameter of nanoplankter (micrometers):
+#' acceptable range is [2, 5]
+#' @param alga_diameter diameter of blue green alga (micrometers): acceptable
+#' range is [50, 2000]
+#' @param length_herbivore herbivore length (millimeters): acceptable range
+#' is [.3, 2.5]
+#' @param death_rate_herbivore herbivore death rate (fraction per day):
+#' acceptable range is [.05, .3]
+#' @param p_influx_rate P influx rate (ug P per L per day): acceptable range
+#' is [.1, .4]
+#' @param p_outflow_rate P outflow rate (fraction per day): acceptable range
+#' is [0, 1]
+#' @param mixed_layer_depth mixed layer depth (meters): acceptable range is
+#' [3.7, 10.2]
 #' 
 #' @return This function returns a tibble, with columns:
 #' \describe{

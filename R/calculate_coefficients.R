@@ -15,8 +15,6 @@ calculate_coefficients <- function(user_arguments) {
   args$s1 <- {0.01822 * args$nanoplankter_radius^2 / 
     (args$nanop_form_resist * args$mixed_layer_depth)}
   
-  # changed 3/25/97, turned back 6/27/06, c[13] := 0.01;
-  
   args$alga_radius <- args$alga_diameter / 2
   args$alga_volume <- (4/3) * 3.14159 * (args$alga_radius^3)
   args$log_alga_volume <- log10(args$alga_volume)

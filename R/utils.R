@@ -17,14 +17,14 @@ example_arguments <- list(nanoplankter_diameter = 3,
 # as given by the original paper
                      # the below 5 given exactly in middle of p. 464
 valid_ranges <- list(nanoplankter_diameter = c(2, 5), 
-                     alga_diameter = c(50, 2000),
+                     alga_diameter = c(10, 2000),
                      length_herbivore = c(.3, 2.5), 
                      death_rate_herbivore = c(.05, .3),
                      p_influx_rate = c(.1, 4), 
                      # this is "E" in the paper, no formal bounds given
                      p_outflow_rate = c(0, 1), 
                      # this bound pulled from "Numerical analyses"
-                     mixed_layer_depth = c(3.7, 10.2))
+                     mixed_layer_depth = c(1, 10.2))
 
 # a list of default arguments set throughout the original source code
                           # c1 is calculated directly in calculate_coeff...
@@ -88,13 +88,12 @@ argument_within_range <- function(index, values, names) {
                       arr.ind = TRUE)
   
   # check whether it's in the range
-  x > valid_ranges[[name_index]][1] & x < valid_ranges[[name_index]][2]
+  x >= valid_ranges[[name_index]][1] & x <= valid_ranges[[name_index]][2]
 }
 
 # computes the flushing rate of phosphorus, algae, and zooplankton
 compute_rates <- function(y, x) {
   
-  # actually resets the constants every time
   x$q <- 1 + (x$c1 * x$t1 * y[[2]]) + (x$c2 * x$t2 * y[[3]])
   x$r1 <- x$v1 * y[[1]] / (x$h1 + y[[1]])
   x$r2 <- x$v2 * y[[1]] / (x$h2 + y[[1]])
@@ -120,7 +119,7 @@ compute_rates <- function(y, x) {
   der[3] <- (x$r2 * y[[3]] * x$ddep) - 
     (x$c2 * y[[3]] * y[[4]] / x$q) - (x$s2 * y[[3]])
   # rate for zooplankton (z) (previously der4)
-  der[4] <- (y[[4]] * x$znum/x$q) - (x$d*y[[4]])
+  der[4] <- (y[[4]] * x$znum / x$q) - (x$d * y[[4]])
   
   
   # return der
@@ -168,7 +167,7 @@ estimate_integrals <- function(y, x) {
   x$dyt <- compute_rates(yt, x)
   
   for (i in 1:4) {
-    x$yout[i] <-  y[[i]] + x$h6*(x$dydx[i] + x$dyt[i] + (2 * x$dym[i]))
+    x$yout[i] <-  y[[i]] + x$h6*(x$dydx[i] + x$dyt[i] + 2 * x$dym[i])
   }
   
   # return the whole list
