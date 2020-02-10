@@ -15,24 +15,31 @@ carpenter_model(
 )
 }
 \arguments{
-\item{nanoplankter_diameter}{diameter of nanoplankter (um) (previously diam1)}
+\item{nanoplankter_diameter}{diameter of nanoplankter (micrometers)}
 
-\item{alga_diameter}{diameter of blue green alga (um) (previously diam2)}
+\item{alga_diameter}{diameter of blue green alga (micrometers)}
 
-\item{length_herbivore}{herbivore length (mm) (previously zlen)}
+\item{length_herbivore}{herbivore length (millimeters)}
 
-\item{death_rate_herbivore}{herbivore death rate (fraction per day) (previously c[3])}
+\item{death_rate_herbivore}{herbivore death rate (fraction per day)}
 
-\item{p_influx_rate}{P influx rate (ug P per L per day) (previously c[11])}
+\item{p_influx_rate}{P influx rate (ug P per L per day)}
 
-\item{p_outflow_rate}{P outflow rate (fraction per day) (previously outflow)}
+\item{p_outflow_rate}{P outflow rate (fraction per day)}
 
-\item{mixed_layer_depth}{mixed layer depth (m) (previously zmix)}
+\item{mixed_layer_depth}{mixed layer depth (meters)}
 }
 \value{
-This function returns a named list, where the first entry is a
-dataframe containing the results of the simulations, and the remaining
-entries give the supplied arguments and intermediate results from the model.
+This function returns a tibble, with columns:
+\describe{
+\item{day}{the simulation day}
+\item{phosphorus}{phosphorus concentration (micrograms per liter)}
+\item{algal_chlorophyll}{algal chlorophyll concentration (micrograms 
+per liter)}
+\item{blue_green_chlorophyll}{blue green chlorophyll concentration 
+(micrograms per liter)}
+\item{zooplankton_biomass}{zooplankton biomass (micrograms per liter)}
+}
 }
 \description{
 This function implements the model from Carpenter's 1992
