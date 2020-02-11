@@ -17,11 +17,10 @@ check_arguments <- function(argument_list) {
   
   # next, check if each of the arguments are within the "valid" range
   # ...an irritating solution since lapply doesn't take in named list elements
-  range_checks <- lapply(seq(1, length(argument_list)),
-                         argument_within_range,
-                         argument_list,
-                         names(argument_list)) %>%
-    unlist()
+  range_checks <- unlist(lapply(seq(1, length(argument_list)),
+                                argument_within_range,
+                                argument_list,
+                                names(argument_list)))
   
   for (i in 1:length(range_checks)) {
     if (!range_checks[i]) {
