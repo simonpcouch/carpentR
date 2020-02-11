@@ -28,7 +28,7 @@ valid_ranges <- list(nanoplankter_diameter = c(2, 5),
 
 # a list of default arguments set throughout the original source code
                           # c1 is calculated directly in calculate_coeff...
-default_arguments <- list(c2 = 0.000907,
+defaults <- list(c2 = 0.000907,
                           d = .2, # also called c3 in source
                           e = 0.4, # also called c4 in source
                           f1 = 0.1, # also called c5 in source
@@ -54,22 +54,24 @@ default_arguments <- list(c2 = 0.000907,
                           pt = 1, 
                           ps = 1, 
                           pertsize = 0,
-                          pulseday = 60) %>%
-  c(.,  # the following four values were prompted for
-        # pre-April-1997, but set automatically thereafter
-    list(p_results = c(.2, rep(NA, .$n_intervals - 1)), 
-        # also called c19, p1 in source
-        sa_results = c(5, rep(NA, .$n_intervals - 1)),
-        # also called c20, a1 in source
-        la_results = c(5, rep(NA, .$n_intervals - 1)),
-        # also called c21, b1 in source
-        z_results = c(2, rep(NA, .$n_intervals - 1)),
-        achl = rep(NA, .$n_intervals),
-        bchl = rep(NA, .$n_intervals),
-        tchl = rep(NA, .$n_intervals),
-        zb = rep(NA, .$n_intervals),
-        day = 1:.$n_intervals,
-        h = 1/.$n_steps_per_day))
+                          pulseday = 60)
+
+
+defaults_ <-   list(p_results = c(.2, rep(NA, defaults$n_intervals - 1)), 
+                    # also called c19, p1 in source
+                    sa_results = c(5, rep(NA, defaults$n_intervals - 1)),
+                    # also called c20, a1 in source
+                    la_results = c(5, rep(NA, defaults$n_intervals - 1)),
+                    # also called c21, b1 in source
+                    z_results = c(2, rep(NA, defaults$n_intervals - 1)),
+                    achl = rep(NA, defaults$n_intervals),
+                    bchl = rep(NA, defaults$n_intervals),
+                    tchl = rep(NA, defaults$n_intervals),
+                    zb = rep(NA, defaults$n_intervals),
+                    day = 1:defaults$n_intervals,
+                    h = 1/defaults$n_steps_per_day)
+
+default_arguments <- c(defaults, defaults_)
 
 
 # Functions --------------------------------------------------------------

@@ -58,7 +58,7 @@ carpenter_model <- function(nanoplankter_diameter, alga_diameter,
   # run the model
   results <- run_carpenter(x)
   
-  tibble::tibble(
+  data.frame(
     day = results$day,
     phosphorus = results$p_results,
     algal_chlorophyll = results$achl,
