@@ -17,6 +17,10 @@ Description: This R Package implements Stephen R. Carpenter's (1992) model for
     predicting lake algal blooms using plankton dynamics and other variables, 
     and was developed specifically for use in Sam Fey's Ecology class at 
     Reed College.
+Imports:
+    ggplot2,
+    dplyr,
+    tidyr
 License: CC0
 Encoding: UTF-8
 LazyData: true
