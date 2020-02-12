@@ -20,14 +20,14 @@
 #'                          mixed_layer_depth = 2.5)
 #'                         
 #' # plot the data using the different visualize_* functions!
-#' visualize_phosphorus(model)
-#' visualize_chlorophyll(model)
-#' visualize_zooplankton(model)
-#' visualize_carpenter(model)
+#' carpenter_viz_phosphorus(model)
+#' carpenter_viz_chlorophyll(model)
+#' carpenter_viz_zooplankton(model)
+#' carpenter_visualize(model)
 #' 
 #' # you can add on layers to the output of this function
 #' # as would any ggplot output
-#' visualize_phosphorus(model) + ggplot2::theme_minimal()
+#' carpenter_viz_phosphorus(model) + ggplot2::theme_minimal()
 #' 
 #' @seealso \code{carpenter_model()} for the function to generate appropriate 
 #' data.
@@ -35,9 +35,9 @@
 carpenter_visualize <- function(model_data) {
   
   list(
-    visualize_phosphorus(model_data),
-    visualize_chlorophyll(model_data),
-    visualize_zooplankton(model_data)
+    carpenter_viz_phosphorus(model_data),
+    carpenter_viz_chlorophyll(model_data),
+    carpenter_viz_zooplankton(model_data)
   )
   
 }
