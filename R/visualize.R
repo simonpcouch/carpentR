@@ -32,7 +32,7 @@
 #' @seealso \code{carpenter_model()} for the function to generate appropriate 
 #' data.
 #' @export
-visualize_carpenter <- function(model_data) {
+carpenter_visualize <- function(model_data) {
   
   list(
     visualize_phosphorus(model_data),
@@ -42,9 +42,9 @@ visualize_carpenter <- function(model_data) {
   
 }
 
-#' @rdname visualize_carpenter
+#' @rdname carpenter_visualize
 #' @export
-visualize_phosphorus <- function(model_data) {
+carpenter_viz_phosphorus <- function(model_data) {
   
   check_model_data(model_data)
   
@@ -58,9 +58,9 @@ visualize_phosphorus <- function(model_data) {
   
 }
 
-#' @rdname visualize_carpenter
+#' @rdname carpenter_visualize
 #' @export
-visualize_chlorophyll <- function(model_data) {
+carpenter_viz_chlorophyll <- function(model_data) {
   
   check_model_data(model_data)
   
@@ -85,9 +85,9 @@ visualize_chlorophyll <- function(model_data) {
                   title = "Simulation: Chlorophyll Levels Over Time")
 }
 
-#' @rdname visualize_carpenter
+#' @rdname carpenter_visualize
 #' @export
-visualize_zooplankton <- function(model_data) {
+carpenter_viz_zooplankton <- function(model_data) {
   
   check_model_data(model_data)
   
