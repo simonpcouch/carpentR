@@ -177,4 +177,26 @@ estimate_integrals <- function(y, x) {
   
 }
 
+check_model_data <- function(model_data) {
+  if (ncol(model_data) != 5) {
+    stop(sprintf("It looks like the dataset you provided has ",
+                 ncol(model_data), " columns, but it should have 5. ",
+                 "Please provide a dataset outputted by `carpenter_model()`."))
+  }
+  
+  if (nrow(model_data) != 120) {
+    stop(sprintf("It looks like the dataset you provided has ",
+                 nrow(model_data), " rows, but it should have 120. ",
+                 "Please provide a dataset outputted by `carpenter_model()`."))
+  }
+  
+  if (FALSE %in% (colnames(model_data) == c("day", 
+                                               "phosphorus", 
+                                               "algal_chlorophyll",
+                                               "blue_green_chlorophyll", 
+                                               "zooplankton_biomass"))) {
+    stop(sprintf("The column names don't look like they were expected to. ",
+                 "Please provide a dataset outputted by `carpenter_model()`."))
+  }
+}
 

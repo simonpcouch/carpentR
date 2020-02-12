@@ -10,4 +10,6 @@
 #' @importFrom dplyr %>%
 "_PACKAGE"
 
-utils::globalVariables(c(".", "perttype", "day", "phosphorus"))
+utils::globalVariables(c(".", "perttype", "day", "phosphorus",
+                         "algal_chlorophyll", "blue_green_chlorophyll",
+                         "type", "value", "zooplankton_biomass"))
