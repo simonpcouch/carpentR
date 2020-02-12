@@ -24,7 +24,7 @@ variables over time.
 }
 \description{
 These functions allow the user to visualize the outputs of
-the \code{carpenter_model()} function. \code{visualize_carpenter()} calls
+the \code{carpenter_model()} function. \code{carpenter_visualize()} calls
 each of the other visualization functions in succession!
 }
 \examples{
