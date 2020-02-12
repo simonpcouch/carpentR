@@ -34,11 +34,11 @@
 #' @export
 visualize_carpenter <- function(model_data) {
   
-  visualize_phosphorus(model_data)
-  
-  visualize_chlorophyll(model_data)
-  
-  visualize_zooplankton(model_data)
+  list(
+    visualize_phosphorus(model_data),
+    visualize_chlorophyll(model_data),
+    visualize_zooplankton(model_data)
+  )
   
 }
 
