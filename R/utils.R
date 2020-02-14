@@ -96,32 +96,32 @@ argument_within_range <- function(index, values, names) {
 # computes the flushing rate of phosphorus, algae, and zooplankton
 compute_rates <- function(y, x) {
   
-  x$q <- 1 + (x$c1 * x$t1 * y[[2]]) + (x$c2 * x$t2 * y[[3]])
-  x$r1 <- x$v1 * y[[1]] / (x$h1 + y[[1]])
-  x$r2 <- x$v2 * y[[1]] / (x$h2 + y[[1]])
-  x$u <- ((x$g1 * y[[2]]) + (x$g2 * y[[3]])) / x$k
+  x$q <- 1 + (x$c1 * x$t1 * y[2]) + (x$c2 * x$t2 * y[3])
+  x$r1 <- x$v1 * y[1] / (x$h1 + y[1])
+  x$r2 <- x$v2 * y[1] / (x$h2 + y[1])
+  x$u <- ((x$g1 * y[2]) + (x$g2 * y[3])) / x$k
   x$ddep <- 1 - x$u
   if (x$ddep < 0) {x$ddep <- 0}
-  x$znum <- {((1 - x$e - x$f1) * x$c1 * y[[2]]) + 
-    ((1 - x$e - x$f2) * x$c2 * y[[3]])}
-  x$excr <- {x$e * y[[4]] * ((x$c1 * y[[2]]) + 
-                                    (x$c2 * y[[3]])) / x$q}
+  x$znum <- {((1 - x$e - x$f1) * x$c1 * y[2]) + 
+    ((1 - x$e - x$f2) * x$c2 * y[3])}
+  x$excr <- {x$e * y[4] * ((x$c1 * y[2]) + 
+                                    (x$c2 * y[3])) / x$q}
 
   
   # initialize a der variable this a vector containing flushing rate of
   # phosphorus, small algae, large algae, and zooplankton (in that order)
   der <- c()
   
-  der[1] <- {x$i - (x$r1 * y[[2]] * x$ddep) - 
-    (x$r2 * y[[3]] * x$ddep) + x$excr - (x$p_outflow_rate * y[[1]])}
+  der[1] <- {x$i - (x$r1 * y[2] * x$ddep) - 
+    (x$r2 * y[3] * x$ddep) + x$excr - (x$p_outflow_rate * y[1])}
   # rate for small algae (sa) (previously der2)
-  der[2] <- {(x$r1 * y[[2]] * x$ddep) - 
-      (x$c1 * y[[2]] * y[[4]] / x$q) - (x$s1 * y[[2]])}
+  der[2] <- {(x$r1 * y[2] * x$ddep) - 
+      (x$c1 * y[2] * y[4] / x$q) - (x$s1 * y[2])}
   # rate for large algae (la) (previously der3)
-  der[3] <- (x$r2 * y[[3]] * x$ddep) - 
-    (x$c2 * y[[3]] * y[[4]] / x$q) - (x$s2 * y[[3]])
+  der[3] <- (x$r2 * y[3] * x$ddep) - 
+    (x$c2 * y[3] * y[4] / x$q) - (x$s2 * y[3])
   # rate for zooplankton (z) (previously der4)
-  der[4] <- (y[[4]] * x$znum / x$q) - (x$d * y[[4]])
+  der[4] <- (y[4] * x$znum / x$q) - (x$d * y[4])
   
   
   # return der
@@ -150,26 +150,26 @@ estimate_integrals <- function(y, x) {
   yt <- rep(NA, 4)
   
   for (i in 1:4) {
-    yt[i] <- y[[i]] + x$hh * x$dydx[i]
+    yt[i] <- y[i] + x$hh * x$dydx[i]
   }
   
   x$dyt <- compute_rates(yt, x)
   
   for (i in 1:4) {
-    yt[i] <-  y[[i]] + x$hh * x$dyt[i]
+    yt[i] <-  y[i] + x$hh * x$dyt[i]
   }
   
   x$dym <- compute_rates(yt, x)
   
   for (i in 1:4) {
-    yt[i] <-  y[[i]] + x$h * x$dym[i]
+    yt[i] <-  y[i] + x$h * x$dym[i]
     x$dym[i] <- x$dyt[i] + x$dym[i]
   }
   
   x$dyt <- compute_rates(yt, x)
   
   for (i in 1:4) {
-    x$yout[i] <-  y[[i]] + x$h6*(x$dydx[i] + x$dyt[i] + 2 * x$dym[i])
+    x$yout[i] <-  y[i] + x$h6*(x$dydx[i] + x$dyt[i] + 2 * x$dym[i])
   }
   
   # return the whole list
@@ -179,15 +179,15 @@ estimate_integrals <- function(y, x) {
 
 check_model_data <- function(model_data) {
   if (ncol(model_data) != 5) {
-    stop(sprintf("It looks like the dataset you provided has ",
+    stop(sprintf(c("It looks like the dataset you provided has ",
                  ncol(model_data), " columns, but it should have 5. ",
-                 "Please provide a dataset outputted by `carpenter_model()`."))
+                 "Please provide a dataset outputted by `carpenter_model()`.")))
   }
   
   if (nrow(model_data) != 120) {
-    stop(sprintf("It looks like the dataset you provided has ",
+    stop(sprintf(c("It looks like the dataset you provided has ",
                  nrow(model_data), " rows, but it should have 120. ",
-                 "Please provide a dataset outputted by `carpenter_model()`."))
+                 "Please provide a dataset outputted by `carpenter_model()`.")))
   }
   
   if (FALSE %in% (colnames(model_data) == c("day", 
@@ -195,8 +195,8 @@ check_model_data <- function(model_data) {
                                                "algal_chlorophyll",
                                                "blue_green_chlorophyll", 
                                                "zooplankton_biomass"))) {
-    stop(sprintf("The column names don't look like they were expected to. ",
-                 "Please provide a dataset outputted by `carpenter_model()`."))
+    stop(sprintf(c("The column names don't look like they were expected to. ",
+                "Please provide a dataset outputted by `carpenter_model()`.")))
   }
 }
 
