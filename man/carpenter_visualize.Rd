@@ -37,7 +37,7 @@ model <- carpenter_model(nanoplankter_diameter = 5.0,
                          p_outflow_rate = 0.0003,
                          mixed_layer_depth = 2.5)
                         
-# plot the data using the different visualize_* functions!
+# plot the data using the different carpenter_vi* functions!
 carpenter_viz_phosphorus(model)
 carpenter_viz_chlorophyll(model)
 carpenter_viz_zooplankton(model)
