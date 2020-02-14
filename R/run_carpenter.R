@@ -3,14 +3,14 @@
 # outputted by calculate_coefficients
 run_carpenter <- function(x) {
   
+  # set initial values
+  y <- c(x$p_results[1], x$sa_results[1], 
+         x$la_results[1], x$z_results[1])
+  
   # triply nested loops.. sheesh (use this instead of the apply/map family
   # so that we don't have to pass values as function-level variables 
   # and since all vectors have been pre-allocated)
   for (i in 2:x$n_intervals) {
-
-    # grab the most recent concentrations
-    y <- c(x$p_results[i-1], x$sa_results[i-1], 
-           x$la_results[i-1], x$z_results[i-1])
     
     for (j in 1:x$interval_length) {
       for (k in 1:x$n_steps_per_day) {
