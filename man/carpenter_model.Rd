@@ -37,7 +37,7 @@ is [0, 1]}
 [3.7, 10.2]}
 }
 \value{
-This function returns a tibble, with columns:
+This function returns a dataframe with columns:
 \describe{
 \item{day}{the simulation day}
 \item{phosphorus}{phosphorus concentration (micrograms per liter)}

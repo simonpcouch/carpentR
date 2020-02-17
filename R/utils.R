@@ -27,37 +27,37 @@ valid_ranges <- list(nanoplankter_diameter = c(2, 5),
                      mixed_layer_depth = c(1, 10.2))
 
 # a list of default arguments set throughout the original source code
-                          # c1 is calculated directly in calculate_coeff...
+                 # c1 is calculated directly in calculate_coeff...
 defaults <- list(c2 = 0.000907,
-                          # d, also called c3 in source, is death_rate_herbivore
-                          e = 0.4, # also called c4 in source
-                          f1 = 0.1, # also called c5 in source
-                          f2 = 0.4, # also called c6 in source
-                          g1 = 1.0, # also called c7 in source
-                          g2 = 0.7, # also called c8 in source
-                          # c9 is referred to as h1 elsewhere in source
-                          h2 = 24.3, # also called c10 in source
-                          i = 0.7, # also called c11 in source
-                          # c12 is referred to as k elsewhere in source
-                          # c13 is referred to as s1 elsewhere in source
-                          s2 = 0.05, # also called c14 in source
-                          t1 = 0.201, # also called c15 in source
-                          t2 = 10.8, # also called c16 in source
-                          # c17 is referred to as v1 elsewhere in source
-                          v2 = 0.43, # also called c18 in source
-                          interval_length = 1, #also called c23 in source
-                          n_intervals = 120, # also called c24 in source
-                          n_steps_per_day = 2, # also called c25 in source
-                          nanop_form_resist = 1.0, # previously phi1
-                          bg_alga_form_resist = 1.0, # previously phi2
-                          altype2 = 1,
-                          pt = 1, 
-                          ps = 1, 
-                          pertsize = 0,
-                          pulseday = 60)
+                 # d, also called c3 in source, is death_rate_herbivore
+                 e = 0.4, # also called c4 in source
+                 f1 = 0.1, # also called c5 in source
+                 f2 = 0.4, # also called c6 in source
+                 g1 = 1.0, # also called c7 in source
+                 g2 = 0.7, # also called c8 in source
+                 # c9 is referred to as h1 elsewhere in source
+                 h2 = 24.3, # also called c10 in source
+                 i = 0.7, # also called c11 in source
+                 # c12 is referred to as k elsewhere in source
+                 # c13 is referred to as s1 elsewhere in source
+                 s2 = 0.05, # also called c14 in source
+                 t1 = 0.201, # also called c15 in source
+                 t2 = 10.8, # also called c16 in source
+                 # c17 is referred to as v1 elsewhere in source
+                 v2 = 0.43, # also called c18 in source
+                 interval_length = 1, #also called c23 in source
+                 n_intervals = 120, # also called c24 in source
+                 n_steps_per_day = 2, # also called c25 in source
+                 nanop_form_resist = 1.0, # previously phi1
+                 bg_alga_form_resist = 1.0, # previously phi2
+                 altype2 = 1,
+                 pt = 1, 
+                 ps = 1, 
+                 pertsize = 0,
+                 pulseday = 60)
 
 
-defaults_ <-   list(p_results = c(.2, rep(NA, defaults$n_intervals - 1)), 
+derived <-     list(p_results = c(.2, rep(NA, defaults$n_intervals - 1)), 
                     # also called c19, p1 in source
                     sa_results = c(5, rep(NA, defaults$n_intervals - 1)),
                     # also called c20, a1 in source
@@ -71,7 +71,7 @@ defaults_ <-   list(p_results = c(.2, rep(NA, defaults$n_intervals - 1)),
                     day = 1:defaults$n_intervals,
                     h = 1/defaults$n_steps_per_day)
 
-default_arguments <- c(defaults, defaults_)
+default_arguments <- c(defaults, derived)
 
 
 # Functions --------------------------------------------------------------

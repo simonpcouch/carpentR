@@ -19,7 +19,7 @@
 #' @param mixed_layer_depth mixed layer depth (meters): acceptable range is
 #' [3.7, 10.2]
 #' 
-#' @return This function returns a tibble, with columns:
+#' @return This function returns a dataframe with columns:
 #' \describe{
 #' \item{day}{the simulation day}
 #' \item{phosphorus}{phosphorus concentration (micrograms per liter)}
@@ -58,6 +58,7 @@ carpenter_model <- function(nanoplankter_diameter, alga_diameter,
   # run the model
   results <- run_carpenter(x)
   
+  # return relevant results
   data.frame(
     day = results$day,
     phosphorus = results$p_results,
