@@ -29,7 +29,7 @@ valid_ranges <- list(nanoplankter_diameter = c(2, 5),
 # a list of default arguments set throughout the original source code
                           # c1 is calculated directly in calculate_coeff...
 defaults <- list(c2 = 0.000907,
-                          d = .2, # also called c3 in source
+                          # d, also called c3 in source, is death_rate_herbivore
                           e = 0.4, # also called c4 in source
                           f1 = 0.1, # also called c5 in source
                           f2 = 0.4, # also called c6 in source
@@ -121,8 +121,7 @@ compute_rates <- function(y, x) {
   der[3] <- (x$r2 * y[3] * x$ddep) - 
     (x$c2 * y[3] * y[4] / x$q) - (x$s2 * y[3])
   # rate for zooplankton (z) (previously der4)
-  der[4] <- (y[4] * x$znum / x$q) - (x$d * y[4])
-  
+  der[4] <- (y[4] * x$znum / x$q) - (x$death_rate_herbivore * y[4])
   
   # return der
   der
@@ -141,7 +140,7 @@ check_bounds <- function(x) {
 # estimates integrals using runge-kutta order 4 method
 estimate_integrals <- function(y, x) {
   
-  x$hh <- x$h * .05
+  x$hh <- x$h * .5
   x$h6 <- x$h / 6
 
   x$dydx <- compute_rates(y, x)

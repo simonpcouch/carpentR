@@ -22,17 +22,18 @@ run_carpenter <- function(x) {
         # y with x$yout
         y <- lapply(x$yout, check_bounds) %>% unlist()
         
-        x$tday <- round(1 + x$h)
-        
-        if (x$tday == x$pulseday) {
-          if (x$perttype == 1) {
-            y[1] <- y[1] + x$pertsize
-          } else if (perttype == 2) {
-            y[2] <- y[2] * x$pertsize
-            y[3] <- y[3] * x$pertsize
-          }
-        }
+        x$tday <- 1 + x$h
       } # end of k-indexed loop
+      
+      if (x$tday == x$pulseday) {
+        if (x$perttype == 1) {
+          y[1] <- y[1] + x$pertsize
+        } else if (perttype == 2) {
+          y[2] <- y[2] * x$pertsize
+          y[3] <- y[3] * x$pertsize
+        }
+      }
+      
     } # end of j-indexed loop
     
     x$p_results[i] <- y[1]
