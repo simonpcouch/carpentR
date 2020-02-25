@@ -37,7 +37,7 @@ defaults <- list(c2 = 0.000907,
                  g2 = 0.7, # also called c8 in source
                  # c9 is referred to as h1 elsewhere in source
                  h2 = 24.3, # also called c10 in source
-                 i = 0.7, # also called c11 in source
+                 # i, also called c11 in source
                  # c12 is referred to as k elsewhere in source
                  # c13 is referred to as s1 elsewhere in source
                  s2 = 0.05, # also called c14 in source
@@ -112,7 +112,7 @@ compute_rates <- function(y, x) {
   # phosphorus, small algae, large algae, and zooplankton (in that order)
   der <- c()
   
-  der[1] <- {x$i - (x$r1 * y[2] * x$ddep) - 
+  der[1] <- {x$p_influx_rate - (x$r1 * y[2] * x$ddep) - 
     (x$r2 * y[3] * x$ddep) + x$excr - (x$p_outflow_rate * y[1])}
   # rate for small algae (sa) (previously der2)
   der[2] <- {(x$r1 * y[2] * x$ddep) - 
