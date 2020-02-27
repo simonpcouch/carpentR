@@ -13,7 +13,7 @@
 #' @param death_rate_herbivore herbivore death rate (fraction per day):
 #' acceptable range is [.05, .3]
 #' @param p_influx_rate P influx rate (ug P per L per day): acceptable range
-#' is [.1, .4]
+#' is [.1, 4]
 #' @param p_outflow_rate P outflow rate (fraction per day): acceptable range
 #' is [0, 1]
 #' @param mixed_layer_depth mixed layer depth (meters): acceptable range is

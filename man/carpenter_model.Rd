@@ -28,7 +28,7 @@ is [.3, 2.5]}
 acceptable range is [.05, .3]}
 
 \item{p_influx_rate}{P influx rate (ug P per L per day): acceptable range
-is [.1, .4]}
+is [.1, 4]}
 
 \item{p_outflow_rate}{P outflow rate (fraction per day): acceptable range
 is [0, 1]}
