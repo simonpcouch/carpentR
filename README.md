@@ -103,11 +103,22 @@ use with `ggplot2` and other packages from the `tidyverse`.)
 
 Happy modeling\!
 
+#### A Note on Implementation
+
 Note that “original source code” is mentioned throughout this package’s
 source—this is in reference to an original implementation of the model
-in Pascal.
+in Pascal. Please contact the maintainer for inquiries about this
+implementation.
 
------
+#### Contributing
+
+We welcome and encourage others to help us make this package as user
+friendly, flexible, and efficient as possible through filing issues and
+pull requests\! Please note that the `carpentR` R package is released
+with a [Contributor Code of Conduct](CONTRIBUTING.md). By contributing
+to this project, you agree to abide by its terms.
+
+#### References
 
 \[1\] Carpenter S.R. (1992) Destabilization of Planktonic Ecosystems and
 Blooms of Blue-Green Algae. In: Kitchell J.F. (eds) Food Web Management.

@@ -20,14 +20,18 @@ remotes::install_github("simonpcouch/carpentR")
 library(carpentR)
 ```
 
-Each of the functions exported by this package begin with the prefix `carpenter_*`--typing the first few letters will show all of the different functions available in {carpentR}!
+Each of the functions exported by this package begin with the prefix 
+`carpenter_*`--typing the first few letters will show all of the different 
+functions available in {carpentR}!
 
 ```{r load, include = FALSE, warning = FALSE, message = FALSE}
 devtools::load_all()
 library(xtable)
 ```
 
-The primary function from this package is called `carpenter_model`, which runs the simulations detailed in the paper based on the parameters given. An example is shown below!
+The primary function from this package is called `carpenter_model`, which runs 
+the simulations detailed in the paper based on the parameters given. An 
+example is shown below!
 
 ```{r model}
 model_data <- carpenter_model(nanoplankter_diameter = 5.0,
@@ -41,7 +45,8 @@ model_data <- carpenter_model(nanoplankter_diameter = 5.0,
 head(model_data)
 ```
 
-{carpentR} also provides several functions to interface with this data. You might be interested in using any of the `carpenter_viz_*` functions:
+{carpentR} also provides several functions to interface with this data. You 
+might be interested in using any of the `carpenter_viz_*` functions:
 
 ```{r viz}
 carpenter_viz_phosphorus(model_data)
@@ -51,13 +56,16 @@ carpenter_viz_chlorophyll(model_data)
 carpenter_viz_zooplankton(model_data)
 ```
 
-The `carpenter_visualize()` function will call each of the three visualization functions (in the above order), and you can add aesthetic layers to these plots as you would with any other `ggplot`:
+The `carpenter_visualize()` function will call each of the three visualization 
+functions (in the above order), and you can add aesthetic layers to these plots 
+as you would with any other `ggplot`:
 
 ```{r viz2}
 carpenter_viz_phosphorus(model_data) + ggplot2::theme_minimal()
 ```
 
-Finally, the package supplies a function called `carpenter_pivot()` that allows you to pivot between wide and long data. Here's an example:
+Finally, the package supplies a function called `carpenter_pivot()` that allows 
+you to pivot between wide and long data. Here's an example:
 
 ```{r pivot}
 model_data_long <- carpenter_pivot(model_data)
@@ -65,15 +73,27 @@ model_data_long <- carpenter_pivot(model_data)
 head(model_data_long)
 ```
 
-Depending on what you want to visualize, either of the default output structure or the "longer" data will be properly tidy (and thus easier to use with `ggplot2` and other packages from the `tidyverse`.)
+Depending on what you want to visualize, either of the default output structure 
+or the "longer" data will be properly tidy (and thus easier to use with 
+`ggplot2` and other packages from the `tidyverse`.)
 
 Happy modeling!
 
+#### A Note on Implementation
+
 Note that "original source code" is mentioned throughout this package's 
 source---this is in reference to an original implementation of the model in 
-Pascal.
+Pascal. Please contact the maintainer for inquiries about this implementation.
 
----------------------------------------------------------------
+#### Contributing
+
+We welcome and encourage others to help us make this package as user friendly, 
+flexible, and efficient as possible through filing issues and pull requests! 
+Please note that the `carpentR` R package is released with a 
+[Contributor Code of Conduct](CONTRIBUTING.md). By contributing to this project,
+you agree to abide by its terms.
+
+#### References
 
 [1] Carpenter S.R. (1992) Destabilization of Planktonic Ecosystems and Blooms 
 of Blue-Green Algae. In: Kitchell J.F. (eds) Food Web Management. Springer 
