@@ -1,6 +1,9 @@
 carpentR
 ================
 
+[![Travis-CI Build
+Status](https://travis-ci.org/simonpcouch/carpentR.svg?branch=master)](https://travis-ci.org/simonpcouch/carpentR)
+
 This R Package implements a model from Stephen R. Carpenter’s 1992 \[1\]
 [paper](https://doi.org/10.1007/978-1-4612-4410-3_23) on predicting lake
 algal blooms using plankton dynamics and other variables, and was
